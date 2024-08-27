@@ -44,7 +44,7 @@ BOOL CWndMain::OnCreate(HWND hWnd, CREATESTRUCT* lpCreateStruct)
 			0, 0, 0, m_Ds.cyCB, hWnd, 0);
 		m_LytTop.Add(&m_EDHwnd, Mar, eck::LLF_FIXHEIGHT | eck::LLF_FILLWIDTH, 1);
 
-		m_CBTopLevelWnd.Create(L"仅顶级窗口", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, 0,
+		m_CBTopLevelWnd.Create(L"不深度搜索", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, 0,
 			0, 0, m_Ds.cxCB, m_Ds.cyCB, hWnd, 0);
 		m_CBTopLevelWnd.SetCheckState(1);
 		m_LytTop.Add(&m_CBTopLevelWnd, Mar, eck::LLF_FIXHEIGHT | eck::LLF_FIXWIDTH);
