@@ -5,9 +5,12 @@ class CWndMain : public eck::CForm
 {
 private:
 	eck::CCheckButton m_CBTopLevelWnd{};
+	eck::CCheckButton m_CBTopMost{};
+	eck::CCheckButton m_CBAutoHome{};
+	eck::CCheckButton m_CBClipboard{};
 	eck::CHitter m_HTT{};
 	eck::CEditExt m_EDHwnd{};
-	eck::CComboBox m_CBBType{};
+
 	eck::CEditExt m_EDText{};
 	eck::CPushButton m_BTBegin{};
 
@@ -15,19 +18,19 @@ private:
 	eck::CLinearLayoutV m_LytText{};
 	eck::CLinearLayoutV m_Lyt{};
 
-
-	enum
-	{
-		IDC_BT = 100,
-	};
+	HWND m_hwTarget{};
 
 	HFONT m_hFont{};
 
 	int m_iDpi = USER_DEFAULT_SCREEN_DPI;
 	ECK_DS_BEGIN(DPIS)
 		ECK_DS_ENTRY(cxyHitter, 32)
-		ECK_DS_ENTRY(cyInfo, 26)
+		ECK_DS_ENTRY(cxCB, 80)
+		ECK_DS_ENTRY(cyCB, 26)
+		ECK_DS_ENTRY(cxBtn, 70)
+		ECK_DS_ENTRY(cyBtn, 26)
 		ECK_DS_ENTRY(Padding, 6)
+		ECK_DS_ENTRY(cxyCursor, 32)
 		;
 	ECK_DS_END_VAR(m_Ds)
 private:

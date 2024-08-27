@@ -7,6 +7,10 @@
 #include "eck\CComboBox.h"
 #include "eck\CEditExt.h"
 #include "eck\CLinearLayout.h"
+#include "eck\WndHelper.h"
+#include "eck\ShellHelper.h"
+
+#include "resource.h"
 
 #include <vector>
 #include <algorithm>
