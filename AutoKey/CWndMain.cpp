@@ -69,6 +69,7 @@ BOOL CWndMain::OnCreate(HWND hWnd, CREATESTRUCT* lpCreateStruct)
 	m_Lyt.Add(&m_LytTop, { .cyBottomHeight = m_Ds.Padding }, eck::LLF_FILLWIDTH | eck::LLF_FIXHEIGHT);
 
 	{
+		m_EDText.SetAutoWrap(TRUE);
 		m_EDText.SetMultiLine(TRUE);
 		m_EDText.Create(NULL, WS_CHILD | WS_VISIBLE | WS_VSCROLL, WS_EX_CLIENTEDGE,
 			0, 0, 0, 0, hWnd, 0);
@@ -91,7 +92,7 @@ CWndMain::~CWndMain()
 
 }
 
-void Send(HWND hWnd, PCWSTR pszText, int cchText, BOOL bAutoHome,
+void Send(PCWSTR pszText, int cchText, BOOL bAutoHome,
 	BOOL bExtended = FALSE, BOOL bReplaceEndOfLine = TRUE)
 {
 	if (cchText < 0)
@@ -105,7 +106,7 @@ void Send(HWND hWnd, PCWSTR pszText, int cchText, BOOL bAutoHome,
 				ch = L'\n';
 				++i;
 			}
-			eck::GenerateCharMsg2(hWnd, ch, bExtended);
+			eck::InputChar(ch, bExtended);
 			if (bAutoHome && (ch == L'\n' || ch == L'\r'))
 			{
 				INPUT input{ .type = INPUT_KEYBOARD };
@@ -120,7 +121,7 @@ void Send(HWND hWnd, PCWSTR pszText, int cchText, BOOL bAutoHome,
 	{
 		EckCounter(cchText, i)
 		{
-			eck::GenerateCharMsg2(hWnd, pszText[i], bExtended);
+			eck::InputChar(pszText[i], bExtended);
 			if (bAutoHome && (pszText[i] == L'\n' || pszText[i] == L'\r'))
 			{
 				INPUT input{ .type = INPUT_KEYBOARD };
@@ -180,7 +181,7 @@ LRESULT CWndMain::OnMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 				if (!rsText.IsEmpty())
 				{
 					SetForegroundWindow(m_hwTarget);
-					Send(m_hwTarget, rsText.Data(), rsText.Size(), m_CBAutoHome.GetCheckState());
+					Send(rsText.Data(), rsText.Size(), m_CBAutoHome.GetCheckState());
 				}
 			}
 			else if ((HWND)lParam == m_CBTopMost.HWnd)

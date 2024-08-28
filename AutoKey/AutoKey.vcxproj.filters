@@ -59,12 +59,4 @@
       <Filter>资源文件</Filter>
     </ResourceCompile>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="E:\Desktop\Normal.cur">
-      <Filter>资源文件</Filter>
-    </None>
-    <None Include="E:\Desktop\122354564.cur">
-      <Filter>资源文件</Filter>
-    </None>
-  </ItemGroup>
 </Project>
