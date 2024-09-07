@@ -38,48 +38,47 @@ BOOL CWndMain::OnCreate(HWND hWnd, CREATESTRUCT* lpCreateStruct)
 		const MARGINS Mar{ .cxRightWidth = m_Ds.Padding };
 		m_HTT.Create(NULL, WS_CHILD | WS_VISIBLE | WS_BORDER, 0,
 			0, 0, m_Ds.cxyHitter, m_Ds.cxyHitter, hWnd, 0);
-		m_LytTop.Add(&m_HTT, Mar, eck::LLF_FIXHEIGHT | eck::LLF_FIXWIDTH);
+		m_LytTop.Add(&m_HTT, Mar, eck::LF_FIX_HEIGHT | eck::LF_FIX_WIDTH);
 
 		m_EDHwnd.Create(NULL, WS_CHILD | WS_VISIBLE, WS_EX_CLIENTEDGE,
 			0, 0, 0, m_Ds.cyCB, hWnd, 0);
-		m_LytTop.Add(&m_EDHwnd, Mar, eck::LLF_FIXHEIGHT | eck::LLF_FILLWIDTH, 1);
+		m_LytTop.Add(&m_EDHwnd, Mar, eck::LF_FIX_HEIGHT | eck::LF_FILL_WIDTH | eck::LF_ALIGN_CENTER, 1);
 
 		m_CBTopLevelWnd.Create(L"不深度搜索", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, 0,
 			0, 0, m_Ds.cxCB, m_Ds.cyCB, hWnd, 0);
 		m_CBTopLevelWnd.SetCheckState(1);
-		m_LytTop.Add(&m_CBTopLevelWnd, Mar, eck::LLF_FIXHEIGHT | eck::LLF_FIXWIDTH);
+		m_LytTop.Add(&m_CBTopLevelWnd, Mar, eck::LF_FIX_HEIGHT | eck::LF_FIX_WIDTH | eck::LF_ALIGN_CENTER);
 
 		m_CBTopMost.Create(L"总在最前", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, 0,
 			0, 0, m_Ds.cxCB, m_Ds.cyCB, hWnd, 0);
 		m_CBTopMost.SetCheckState(1);
-		m_LytTop.Add(&m_CBTopMost, Mar, eck::LLF_FIXHEIGHT | eck::LLF_FIXWIDTH);
+		m_LytTop.Add(&m_CBTopMost, Mar, eck::LF_FIX_HEIGHT | eck::LF_FIX_WIDTH | eck::LF_ALIGN_CENTER);
 
 		m_CBAutoHome.Create(L"自动Home", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, 0,
 			0, 0, m_Ds.cxCB, m_Ds.cyCB, hWnd, 0);
 		m_CBAutoHome.SetCheckState(1);
-		m_LytTop.Add(&m_CBAutoHome, Mar, eck::LLF_FIXHEIGHT | eck::LLF_FIXWIDTH);
+		m_LytTop.Add(&m_CBAutoHome, Mar, eck::LF_FIX_HEIGHT | eck::LF_FIX_WIDTH | eck::LF_ALIGN_CENTER);
 
 		m_CBClipboard.Create(L"使用剪贴板", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, 0,
 			0, 0, m_Ds.cxCB, m_Ds.cyCB, hWnd, 0);
 		m_CBClipboard.SetCheckState(1);
-		m_LytTop.Add(&m_CBClipboard, Mar, eck::LLF_FIXHEIGHT | eck::LLF_FIXWIDTH);
-
-		m_LytTop.SetAlign(eck::Align::Center);
+		m_LytTop.Add(&m_CBClipboard, Mar, eck::LF_FIX_HEIGHT | eck::LF_FIX_WIDTH | eck::LF_ALIGN_CENTER);
 	}
-	m_Lyt.Add(&m_LytTop, { .cyBottomHeight = m_Ds.Padding }, eck::LLF_FILLWIDTH | eck::LLF_FIXHEIGHT);
+	m_Lyt.Add(&m_LytTop, { .cyBottomHeight = m_Ds.Padding }, eck::LF_FILL_WIDTH | eck::LF_FIX_HEIGHT);
 
 	{
 		m_EDText.SetAutoWrap(TRUE);
 		m_EDText.SetMultiLine(TRUE);
 		m_EDText.Create(NULL, WS_CHILD | WS_VISIBLE | WS_VSCROLL, WS_EX_CLIENTEDGE,
 			0, 0, 0, 0, hWnd, 0);
-		m_LytText.Add(&m_EDText, {}, eck::LLF_FILLWIDTH | eck::LLF_FILLHEIGHT, 1);
+		m_LytText.Add(&m_EDText, {}, eck::LF_FILL_WIDTH | eck::LF_FILL_HEIGHT, 1);
 
 		m_BTBegin.Create(L"开始", WS_CHILD | WS_VISIBLE, 0,
 			0, 0, m_Ds.cxBtn, m_Ds.cyBtn, hWnd, 0);
-		m_LytText.Add(&m_BTBegin, {}, eck::LLF_FIXWIDTH | eck::LLF_FIXHEIGHT);
+		m_LytText.Add(&m_BTBegin, { .cyTopHeight = m_Ds.Padding },
+			eck::LF_FIX_WIDTH | eck::LF_FIX_HEIGHT | eck::LF_ALIGN_FAR);
 	}
-	m_Lyt.Add(&m_LytText, {}, eck::LLF_FILLWIDTH | eck::LLF_FILLHEIGHT, 1);
+	m_Lyt.Add(&m_LytText, {}, eck::LF_FILL_WIDTH | eck::LF_FILL_HEIGHT, 1);
 
 	eck::SetFontForWndAndCtrl(hWnd, m_hFont);
 
@@ -160,7 +159,7 @@ LRESULT CWndMain::OnMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 				else
 					m_hwTarget = eck::WndFromPoint(p->pt);
 				eck::CWnd w(m_hwTarget);
-				m_EDHwnd.SetText(eck::Format(L"0x%08X(%s ; %s)",
+				m_EDHwnd.SetText(eck::Format(L"0x%08X(%s;%s)",
 					(UINT)(UINT_PTR)m_hwTarget, w.GetText().Data(), w.GetClsName().Data()).Data());
 			}
 		}
